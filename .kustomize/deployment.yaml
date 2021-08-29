@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+  name: prueba-gha
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      name: prueba-gha
+  template:
+    metadata:
+      labels:
+        name: prueba-gha
+    spec:
+      imagePullSecrets:
+        - name: regcred
+      containers:
+        - name: prueba-gha
+          image: docker.shf.com.co/finance-app/backend:latest
+          ports:
+            - containerPort: 3000
+              name: http

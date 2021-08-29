@@ -1,0 +1,48 @@
+on: push
+name: deploy
+jobs:
+  build-and-push:
+    name: build and push image
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@master
+      - name: Login to SHF Docker Registry
+        uses: docker/login-action@v1
+        with:
+          registry: docker.shf.com.co
+          username: admin
+          password: supershf
+      - name: Build and Push to Docker
+        uses: docker/build-push-action@v2
+        env:
+          GITHUB_SHA: ${{github.sha}}
+          DOCKER_IMAGE: docker.shf.com.co/finance-app/backend
+        with:
+          push: true
+          tags: '${{ env.DOCKER_IMAGE }}:${{ github.sha }}'
+  deploy-to-cluster:
+    name: deploy to cluster
+    runs-on: ubuntu-latest
+    env:
+      KUBE_CONFIG_DATA: ${{ secrets.KUBE_CONFIG_DATA }}
+      HOLA: test
+    needs: build-and-push
+    steps:
+      - uses: actions/checkout@master
+      - name: setub kube tools
+        uses: yokawasa/action-setup-kube-tools@v0.6.0
+        with:
+          kubectl: '1.20.2'
+          kustomize: '3.7.0'
+      - name: deploying to cluster
+        id: kubectl
+        env:
+          GITHUB_SHA: ${{ github.sha }}
+        run: |
+          mkdir -p ~/.kube/
+          echo $KUBE_CONFIG_DATA | base64 -d > ~/.kube/config
+          cd .kustomize
+          kustomize edit set image docker.shf.com.co/finance-app/backend:$GITHUB_SHA
+          kustomize build . | kubectl apply -f -
+          kubectl -n prueba rollout status deployment/prueba-gha
+          kubectl get all --all-namespaces
