@@ -35,7 +35,7 @@ export class UsersService {
           email,
           name,
           password,
-        }
+        },
       });
 
       return user;

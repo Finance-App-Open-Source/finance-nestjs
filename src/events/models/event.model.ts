@@ -2,7 +2,7 @@ import { Field, ID, ObjectType } from '@nestjs/graphql';
 import { Category } from './category.model';
 @ObjectType()
 export class Event {
-  @Field(type => ID)
+  @Field((type) => ID)
   id: number;
 
   @Field()
