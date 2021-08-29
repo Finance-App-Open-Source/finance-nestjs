@@ -1,6 +1,4 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
-import { Event, Prisma } from '@prisma/client';
-import { PrismaClientValidationError } from '@prisma/client/runtime';
 import { PrismaService } from '../prisma.service';
 // This should be a real class/interface representing a user entity
 export type User = any;
