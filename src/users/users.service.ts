@@ -1,5 +1,6 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { PrismaService } from '../prisma.service';
+import * as bcrypt from 'bcrypt';
 // This should be a real class/interface representing a user entity
 export type User = any;
 
@@ -28,11 +29,13 @@ export class UsersService {
     }
 
     try {
+      const saltOrRounds = 10;
+      const passwordHash = await bcrypt.hash(password, saltOrRounds);
       const user = await this.prisma.user.create({
         data: {
           email,
           name,
-          password,
+          password: passwordHash,
         },
       });
 
@@ -50,7 +53,7 @@ export class UsersService {
     }
 
     // compare passwords
-    const areEqual = user.password === password;
+    const areEqual = await bcrypt.compare(password, user.password);
 
     if (!areEqual) {
       throw new HttpException('Invalid credentials', HttpStatus.UNAUTHORIZED);
