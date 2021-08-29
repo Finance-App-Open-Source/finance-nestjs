@@ -11,10 +11,72 @@ generator client {
 }
 
 model User {
-  id         Int       @id @default(autoincrement())
-  name       String
-  email      String    @unique
-  verifiedAt DateTime?
-  password   String
-  createdAt  DateTime  @default(now())
+  id           Int           @id @default(autoincrement())
+  name         String
+  surname      String
+  gender       Gender
+  email        String        @unique
+  verifiedAt   DateTime?
+  password     String
+  createdAt    DateTime      @default(now())
+  accounts     Account[]
+  transactions Transaction[]
+}
+
+model Account {
+  id          Int           @id @default(autoincrement())
+  name        String
+  amount      Float
+  User        User?         @relation(fields: [userId], references: [id])
+  userId      Int?
+  Transaction Transaction[]
+}
+
+model Transaction {
+  id              Int             @id @default(autoincrement())
+  amount          Float
+  type            TransactionType
+  User            User?           @relation(fields: [userId], references: [id])
+  userId          Int?
+  category        Category        @relation(fields: [categoryId], references: [id])
+  categoryId      Int
+  account         Account         @relation(fields: [accountId], references: [id])
+  accountId       Int
+  currency        Currency        @relation(fields: [currencyId], references: [id])
+  currencyId      Int
+  dateTime        DateTime
+  createdAt       DateTime        @default(now())
+  paymentMethod   PaymentMethod   @relation(fields: [paymentMethodId], references: [id])
+  paymentMethodId Int
+}
+
+enum TransactionType {
+  INCOME
+  EXPEND
+  TRANSFER
+}
+
+model Category {
+  id          Int           @id @default(autoincrement())
+  name        String
+  Transaction Transaction[]
+}
+
+model Currency {
+  id          Int           @id @default(autoincrement())
+  Transaction Transaction[]
+  name        String
+  code        String
+}
+
+model PaymentMethod {
+  id          Int           @id @default(autoincrement())
+  name        String
+  Transaction Transaction[]
+}
+
+enum Gender {
+  MALE
+  FEMALE
+  NA
 }
