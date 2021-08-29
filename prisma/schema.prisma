@@ -13,8 +13,8 @@ generator client {
 model User {
   id           Int           @id @default(autoincrement())
   name         String
-  surname      String
-  gender       Gender
+  surname      String?
+  gender       Gender?
   email        String        @unique
   verifiedAt   DateTime?
   password     String
