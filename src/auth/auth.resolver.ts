@@ -1,7 +1,7 @@
 import { Args, Mutation, Resolver } from '@nestjs/graphql';
 // import { PubSub } from 'apollo-server-express';
 import { AuthService } from './auth.service';
-import { User } from './models/user.model';
+import { User } from '../users/models/user.model';
 import { LoginResponse, RegisterResponse } from './models/auth.model';
 
 @Resolver(() => User)
