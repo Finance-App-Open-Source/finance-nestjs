@@ -1,3 +1,0 @@
-type Ticket {
-  id: Int
-}
