@@ -19,31 +19,11 @@ type RegisterResponse {
   accessToken: String
 }
 
-type Event {
-  id: ID!
-  name: String!
-  description: String
-  createdAt: DateTime!
-  startTime: DateTime!
-}
-
-"""
-A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
-"""
-scalar DateTime
-
 type Query {
-  event(id: Float!): Event!
-  events: [Event!]!
+  users: [User!]!
 }
 
 type Mutation {
   login(password: String!, email: String!): LoginResponse!
   register(password: String!, email: String!, name: String!): RegisterResponse!
-  createEvent(startTime: DateTime!, description: String!, name: String!): Event!
-  deleteEvent(id: Float!): Event!
-}
-
-type Subscription {
-  eventCreated: Event!
 }
