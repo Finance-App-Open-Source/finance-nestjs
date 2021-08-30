@@ -1,5 +1,7 @@
 import { Field, InputType, ObjectType } from '@nestjs/graphql';
 import { UserModel } from '../../users/models/user.model';
+import { IsEmail } from 'class-validator';
+
 @ObjectType()
 export class LoginResponse {
   @Field()
@@ -27,6 +29,7 @@ export class RegisterResponse {
 @InputType()
 export class LoginInput {
   @Field()
+  @IsEmail()
   email: string;
   @Field()
   password: string;
@@ -39,6 +42,7 @@ export class RegisterInput {
   @Field()
   surname: string;
   @Field()
+  @IsEmail({}, { message: 'Is not a valid email!' })
   email: string;
   @Field()
   password: string;

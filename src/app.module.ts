@@ -20,6 +20,12 @@ import { AccountsService } from './accounts/accounts.service';
     AuthModule,
   ],
   controllers: [AppController],
-  providers: [AppService, PrismaService, UsersResolver, AccountsResolver, AccountsService],
+  providers: [
+    AppService,
+    PrismaService,
+    UsersResolver,
+    AccountsResolver,
+    AccountsService,
+  ],
 })
 export class AppModule {}
