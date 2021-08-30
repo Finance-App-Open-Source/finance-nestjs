@@ -1,7 +1,7 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { PrismaService } from '../prisma.service';
 import * as bcrypt from 'bcrypt';
-import { UserModel } from './models/user.model';
+import { CreateUserInput, UserModel } from './models/user.model';
 import { LoginInput } from 'src/auth/models/auth.model';
 
 @Injectable()
@@ -17,12 +17,8 @@ export class UsersService {
     });
   }
 
-  async create(createUserInput: {
-    email: string;
-    password: string;
-    name: string;
-  }): Promise<UserModel> {
-    const { name, password, email } = createUserInput;
+  async create(createUserInput: CreateUserInput): Promise<UserModel> {
+    const { name, password, email, surname } = createUserInput;
     const userInDb = await this.findOne(email);
     if (userInDb) {
       throw new HttpException('User already exists', HttpStatus.BAD_REQUEST);
@@ -36,6 +32,7 @@ export class UsersService {
           email,
           name,
           password: passwordHash,
+          surname,
         },
       });
 

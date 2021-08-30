@@ -59,7 +59,7 @@ type Query {
 type Mutation {
   createAccount(createAccountInput: CreateAccountInput!): AccountModel
   login(loginInput: LoginInput!): LoginResponse!
-  register(registerInput: RegisterInput!): RegisterResponse!
+  register(registerInput: CreateUserInput!): RegisterResponse!
 }
 
 input CreateAccountInput {
@@ -72,7 +72,7 @@ input LoginInput {
   password: String!
 }
 
-input RegisterInput {
+input CreateUserInput {
   name: String!
   surname: String!
   email: String!

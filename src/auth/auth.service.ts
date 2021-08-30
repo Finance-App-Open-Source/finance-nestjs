@@ -3,8 +3,8 @@ import { UsersService } from '../users/users.service';
 import { JwtService } from '@nestjs/jwt';
 import { jwtConstants } from './constants';
 import * as bcrypt from 'bcrypt';
-import { UserModel } from 'src/users/models/user.model';
-import { LoginInput, RegisterInput } from './models/auth.model';
+import { CreateUserInput, UserModel } from 'src/users/models/user.model';
+import { LoginInput } from './models/auth.model';
 
 @Injectable()
 export class AuthService {
@@ -37,7 +37,7 @@ export class AuthService {
     };
   }
 
-  async register(registerInput: RegisterInput) {
+  async register(registerInput: CreateUserInput) {
     let status = {
       success: true,
       message: 'User registered',
