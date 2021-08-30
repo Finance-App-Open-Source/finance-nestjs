@@ -11,7 +11,7 @@ export class AccountsResolver {
   constructor(private accountService: AccountsService) {}
 
   @UseGuards(GqlAuthGuard)
-  @Mutation(() => AccountModel)
+  @Mutation(() => AccountModel, { nullable: true })
   async createAccount(
     @CurrentUser() user: UserModel,
     @Args('createAccountInput') createAccountInput: CreateAccountInput,

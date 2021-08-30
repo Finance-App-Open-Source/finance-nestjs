@@ -57,7 +57,7 @@ type Query {
 }
 
 type Mutation {
-  createAccount(createAccountInput: CreateAccountInput!): AccountModel!
+  createAccount(createAccountInput: CreateAccountInput!): AccountModel
   login(loginInput: LoginInput!): LoginResponse!
   register(registerInput: RegisterInput!): RegisterResponse!
 }
