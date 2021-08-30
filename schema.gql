@@ -6,7 +6,7 @@ type AccountModel {
   id: ID!
   name: String!
   amount: Float!
-  userId: Float!
+  userId: Float
 }
 
 type TransactionModel {
@@ -54,6 +54,12 @@ type Query {
 }
 
 type Mutation {
+  createAccount(createAccountInput: CreateAccountInput!): AccountModel!
   login(password: String!, email: String!): LoginResponse!
   register(password: String!, email: String!, name: String!): RegisterResponse!
+}
+
+input CreateAccountInput {
+  name: String!
+  ammount: Float!
 }

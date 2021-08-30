@@ -1,5 +1,14 @@
-import { Field, ID, ObjectType } from '@nestjs/graphql';
+import { Field, ID, InputType, ObjectType } from '@nestjs/graphql';
 import { Account } from '@prisma/client';
+
+@InputType()
+export class CreateAccountInput {
+  @Field()
+  name: string;
+
+  @Field()
+  ammount: number;
+}
 @ObjectType()
 export class AccountModel implements Account {
   @Field(() => ID)
@@ -11,6 +20,6 @@ export class AccountModel implements Account {
   @Field()
   amount: number;
 
-  @Field()
+  @Field({ nullable: true })
   userId: number | null;
 }
