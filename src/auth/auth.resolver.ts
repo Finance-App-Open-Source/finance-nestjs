@@ -2,7 +2,12 @@ import { Args, Mutation, Resolver } from '@nestjs/graphql';
 // import { PubSub } from 'apollo-server-express';
 import { AuthService } from './auth.service';
 import { UserModel } from '../users/models/user.model';
-import { LoginResponse, RegisterResponse } from './models/auth.model';
+import {
+  LoginInput,
+  LoginResponse,
+  RegisterInput,
+  RegisterResponse,
+} from './models/auth.model';
 
 @Resolver(() => UserModel)
 export class AuthResolver {
@@ -10,26 +15,20 @@ export class AuthResolver {
 
   @Mutation(() => LoginResponse)
   async login(
-    @Args('email') email: string,
-    @Args('password') password: string,
-  ): Promise<{
-    success: boolean;
-    message: string;
-    accessToken: string;
-    user: UserModel;
-  }> {
+    @Args('loginInput') loginInput: LoginInput,
+  ): Promise<LoginResponse> {
+    const { email, password } = loginInput;
     return this.authService.login({ email, password });
   }
 
   @Mutation(() => RegisterResponse)
   async register(
-    @Args('name') name: string,
-    @Args('surname') surname: string,
-    @Args('email') email: string,
-    @Args('password') password: string,
-  ) {
+    @Args('registerInput') registerInput: RegisterInput,
+  ): Promise<RegisterResponse> {
+    const { name, surname, email, password } = registerInput;
     return this.authService.register({
       name,
+      surname,
       email,
       password,
     });

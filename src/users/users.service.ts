@@ -2,6 +2,7 @@ import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { PrismaService } from '../prisma.service';
 import * as bcrypt from 'bcrypt';
 import { UserModel } from './models/user.model';
+import { LoginInput } from 'src/auth/models/auth.model';
 
 @Injectable()
 export class UsersService {
@@ -44,7 +45,7 @@ export class UsersService {
     }
   }
 
-  async findByLogin({ email, password }): Promise<UserModel> {
+  async findByLogin({ email, password }: LoginInput): Promise<UserModel> {
     const user = await this.findOne(email);
 
     if (!user) {
