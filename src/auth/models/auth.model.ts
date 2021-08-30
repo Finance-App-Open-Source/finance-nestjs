@@ -1,5 +1,5 @@
 import { Field, ObjectType } from '@nestjs/graphql';
-import { User } from '../../users/models/user.model';
+import { UserModel } from '../../users/models/user.model';
 @ObjectType()
 export class LoginResponse {
   @Field()
@@ -9,7 +9,7 @@ export class LoginResponse {
   accessToken: string;
 
   @Field()
-  user: User;
+  user: UserModel;
 }
 
 @ObjectType()

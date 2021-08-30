@@ -1,7 +1,9 @@
 import { Injectable } from '@nestjs/common';
 import { UsersService } from '../users/users.service';
 import { JwtService } from '@nestjs/jwt';
+import { jwtConstants } from './constants';
 import * as bcrypt from 'bcrypt';
+import { UserModel } from 'src/users/models/user.model';
 
 @Injectable()
 export class AuthService {
@@ -10,7 +12,7 @@ export class AuthService {
     private jwtService: JwtService,
   ) {}
 
-  async validateUser(email: string, pass: string): Promise<any> {
+  async validate(email: string, pass: string): Promise<UserModel | null> {
     const user = await this.usersService.findOne(email);
     if (user && bcrypt.compare(pass, user.password)) {
       const { ...result } = user;
@@ -52,5 +54,19 @@ export class AuthService {
     }
 
     return status;
+  }
+
+  async verify(token: string): Promise<UserModel> {
+    const decoded = this.jwtService.verify(token, {
+      secret: jwtConstants.secret,
+    });
+
+    const user = await this.usersService.findOne(decoded.email);
+
+    if (!user) {
+      throw new Error('Unable to get the user from decoded token.');
+    }
+
+    return user;
   }
 }

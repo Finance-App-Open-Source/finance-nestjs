@@ -7,7 +7,7 @@ export class CreateAccountInput {
   name: string;
 
   @Field()
-  ammount: number;
+  amount: number;
 }
 @ObjectType()
 export class AccountModel implements Account {

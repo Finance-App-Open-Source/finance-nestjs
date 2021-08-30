@@ -1,14 +1,13 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { PrismaService } from '../prisma.service';
 import * as bcrypt from 'bcrypt';
-// This should be a real class/interface representing a user entity
-export type User = any;
+import { UserModel } from './models/user.model';
 
 @Injectable()
 export class UsersService {
   constructor(private prisma: PrismaService) {}
 
-  async findOne(email: string): Promise<User | undefined> {
+  async findOne(email: string): Promise<UserModel | undefined> {
     // return this.users.find((user) => user.username === username);
     return await this.prisma.user.findUnique({
       where: {
@@ -21,7 +20,7 @@ export class UsersService {
     email: string;
     password: string;
     name: string;
-  }) {
+  }): Promise<UserModel> {
     const { name, password, email } = createUserInput;
     const userInDb = await this.findOne(email);
     if (userInDb) {
@@ -45,7 +44,7 @@ export class UsersService {
     }
   }
 
-  async findByLogin({ email, password }) {
+  async findByLogin({ email, password }): Promise<UserModel> {
     const user = await this.findOne(email);
 
     if (!user) {

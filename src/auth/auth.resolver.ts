@@ -1,10 +1,10 @@
 import { Args, Mutation, Resolver } from '@nestjs/graphql';
 // import { PubSub } from 'apollo-server-express';
 import { AuthService } from './auth.service';
-import { User } from '../users/models/user.model';
+import { UserModel } from '../users/models/user.model';
 import { LoginResponse, RegisterResponse } from './models/auth.model';
 
-@Resolver(() => User)
+@Resolver(() => UserModel)
 export class AuthResolver {
   constructor(private readonly authService: AuthService) {}
 
@@ -16,7 +16,7 @@ export class AuthResolver {
     success: boolean;
     message: string;
     accessToken: string;
-    user: User;
+    user: UserModel;
   }> {
     return this.authService.login({ email, password });
   }
@@ -24,6 +24,7 @@ export class AuthResolver {
   @Mutation(() => RegisterResponse)
   async register(
     @Args('name') name: string,
+    @Args('surname') surname: string,
     @Args('email') email: string,
     @Args('password') password: string,
   ) {

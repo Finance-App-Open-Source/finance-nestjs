@@ -1,11 +1,11 @@
-import { Field, ID, ObjectType } from '@nestjs/graphql';
-import { Gender } from '@prisma/client';
+import { Field, HideField, ID, ObjectType } from '@nestjs/graphql';
+import { Gender, User } from '@prisma/client';
 import { AccountModel } from 'src/accounts/models/account.model';
 import { TransactionModel } from 'src/transactions/models/transactions.model';
 @ObjectType()
-export class User {
+export class UserModel implements User {
   @Field(() => ID)
-  id: string;
+  id: number;
 
   @Field()
   name: string;
@@ -19,9 +19,19 @@ export class User {
   @Field()
   email: string;
 
-  @Field(() => [AccountModel])
-  accounts: AccountModel[];
+  @Field({ nullable: true })
+  verifiedAt: Date;
 
-  @Field(() => [TransactionModel])
-  transactions: TransactionModel[];
+  @Field({ nullable: true })
+  createdAt: Date;
+
+  @Field()
+  @HideField()
+  password: string;
+
+  @Field(() => [AccountModel], { nullable: true })
+  accounts?: AccountModel[];
+
+  @Field(() => [TransactionModel], { nullable: true })
+  transactions?: TransactionModel[];
 }
