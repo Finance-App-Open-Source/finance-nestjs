@@ -6,20 +6,25 @@ type AccountModel {
   id: ID!
   name: String!
   amount: Float!
-  userId: Float
 }
 
 type TransactionModel {
   id: ID!
+  type: TransactionType!
+  userId: ID
+  categoryId: ID!
+  accountId: ID!
+  currencyId: ID!
+  paymentMethodId: ID!
   amount: Float!
-  type: String!
-  userId: Float!
-  categoryId: Float!
-  accountId: Float!
-  currencyId: Float!
   dateTime: DateTime!
   createdAt: DateTime!
-  paymentMethodId: Float!
+}
+
+enum TransactionType {
+  INCOME
+  EXPEND
+  TRANSFER
 }
 
 """
@@ -29,27 +34,32 @@ scalar DateTime
 
 type UserModel {
   id: ID!
-  name: String!
-  surname: String!
-  gender: String!
-  email: String!
+  surname: String
+  gender: Gender
   verifiedAt: DateTime
-  createdAt: DateTime
-  password: String!
+  name: String!
+  email: String!
+  createdAt: DateTime!
   accounts: [AccountModel!]
   transactions: [TransactionModel!]
 }
 
+enum Gender {
+  MALE
+  FEMALE
+  NA
+}
+
 type LoginResponse {
+  user: UserModel!
   success: Boolean!
   accessToken: String!
-  user: UserModel!
 }
 
 type RegisterResponse {
+  accessToken: String
   success: Boolean!
   message: String!
-  accessToken: String
 }
 
 type Query {

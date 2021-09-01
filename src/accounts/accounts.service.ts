@@ -12,7 +12,7 @@ export class AccountsService {
         createAccountInput,
         userId,
       );
-
+      createAccountInput['userId'] = userId;
       const account = await this.prisma.account.create({
         data: createAccountInput,
       });

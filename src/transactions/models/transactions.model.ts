@@ -1,26 +1,27 @@
-import { Field, ID, ObjectType } from '@nestjs/graphql';
+import { Field, ID, ObjectType, registerEnumType } from '@nestjs/graphql';
 import { Transaction, TransactionType } from '@prisma/client';
+
+registerEnumType(TransactionType, {
+  name: 'TransactionType',
+});
 
 @ObjectType()
 export class TransactionModel implements Transaction {
   @Field(() => ID)
   id: number;
-  @Field()
   amount: number;
-  @Field()
+  @Field(() => TransactionType)
   type: TransactionType;
-  @Field()
-  userId: number | null;
-  @Field()
+  @Field(() => ID, { nullable: true })
+  userId: number;
+  @Field(() => ID)
   categoryId: number;
-  @Field()
+  @Field(() => ID)
   accountId: number;
-  @Field()
+  @Field(() => ID)
   currencyId: number;
-  @Field()
   dateTime: Date;
-  @Field()
   createdAt: Date;
-  @Field()
+  @Field(() => ID)
   paymentMethodId: number;
 }

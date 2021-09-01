@@ -17,7 +17,15 @@ export class AccountsResolver {
     @Args('createAccountInput') createAccountInput: CreateAccountInput,
   ) {
     const userId = user.id;
-    this.accountService.createAccount(createAccountInput, userId);
-    return null;
+    console.log(
+      '🚀 ~ file: accounts.resolver.ts ~ line 20 ~ AccountsResolver ~ userId',
+      userId,
+    );
+
+    const account = await this.accountService.createAccount(
+      createAccountInput,
+      userId,
+    );
+    return account;
   }
 }
