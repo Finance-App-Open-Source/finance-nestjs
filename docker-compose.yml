@@ -1,25 +1,41 @@
-version: '2'
+version: '3.7'
 
 services:
-  db:
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: finance-app_api
+    restart: always
+    ports:
+      - 3000:3000
+    depends_on:
+      - mysql
+    env_file:
+      - .env
+
+  mysql:
     image: mariadb
     container_name: finance-app_db
     ports:
-      - 1234:3306
-    environment:
-      MYSQL_ROOT_PASSWORD: root
+      - 3360:3306
+    env_file:
+      - .env
     volumes:
       - finance-app-db:/var/lib/mysql
 
   phpmyadmin:
+    container_name: finance-app_phpmyadmin
     depends_on:
-      - db
+      - mysql
     image: phpmyadmin/phpmyadmin
     ports:
-      - 2222:80
+      - 8080:80
     environment:
-      PMA_HOST: db
-      MYSQL_ROOT_PASSWORD: root
+      PMA_HOST: mysql
+    env_file:
+      - .env
 
 volumes:
-  finance-app-db:
+  mysql:
+    name: finance-app-db
