@@ -18,9 +18,9 @@ services:
     depends_on:
       - db
     environment:
-      VIRTUAL_HOST: staging-api-app.citix.com.co
+      VIRTUAL_HOST: staging-api-app.finance.com.co
       VIRTUAL_PORT: 3000
-      LETSENCRYPT_HOST: staging-api-app.citix.com.co
+      LETSENCRYPT_HOST: staging-api-app.finance.com.co
       LETSENCRYPT_EMAIL: principal@shf.com.co
     volumes:
       - ./:/app
