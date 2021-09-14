@@ -18,7 +18,7 @@ export class UsersService {
   }
 
   async create(createUserInput: CreateUserInput): Promise<UserModel> {
-    const { name, password, email, surname } = createUserInput;
+    const { name, password, email, nickname } = createUserInput;
     const userInDb = await this.findOne(email);
     if (userInDb) {
       throw new HttpException('User already exists', HttpStatus.BAD_REQUEST);
@@ -32,7 +32,7 @@ export class UsersService {
           email,
           name,
           password: passwordHash,
-          surname,
+          nickname,
         },
       });
 

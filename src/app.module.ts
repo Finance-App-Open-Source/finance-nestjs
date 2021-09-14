@@ -13,6 +13,7 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { GraphqlConfig } from './configs/config.interface';
 import { UsersModule } from './users/users.module';
 import { AccountsModule } from './accounts/accounts.module';
+import { TransactionsModule } from './transactions/transactions.module';
 
 @Module({
   imports: [
@@ -41,6 +42,7 @@ import { AccountsModule } from './accounts/accounts.module';
     AuthModule,
     UsersModule,
     AccountsModule,
+    TransactionsModule,
   ],
   controllers: [AppController],
   providers: [AppService, AppService],

@@ -16,8 +16,8 @@ input CreateAccountInput {
 input CreateUserInput {
   email: String!
   name: String!
+  nickname: String!
   password: String!
-  surname: String!
 }
 
 """
@@ -45,10 +45,12 @@ type LoginResponse {
 type Mutation {
   createAccount(createAccountInput: CreateAccountInput!): AccountModel
   login(loginInput: LoginInput!): LoginResponse!
+  makeTransaction(transactionInput: TransactionInput!): TransactionModel!
   register(registerInput: CreateUserInput!): RegisterResponse!
 }
 
 type Query {
+  transactions: [TransactionModel!]!
   users: [UserModel!]!
 }
 
@@ -56,6 +58,16 @@ type RegisterResponse {
   accessToken: String
   message: String!
   success: Boolean!
+}
+
+input TransactionInput {
+  accountId: ID!
+  amount: Int!
+  categoryId: ID!
+  currencyId: ID!
+  paymentMethodId: ID!
+  type: TransactionType!
+  userId: ID
 }
 
 type TransactionModel {
@@ -84,7 +96,7 @@ type UserModel {
   gender: Gender
   id: ID!
   name: String!
-  surname: String
+  nickname: String
   transactions: [TransactionModel!]
   verifiedAt: DateTime
 }

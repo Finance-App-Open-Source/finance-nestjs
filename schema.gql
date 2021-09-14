@@ -34,7 +34,7 @@ scalar DateTime
 
 type UserModel {
   id: ID!
-  surname: String
+  nickname: String
   gender: Gender
   verifiedAt: DateTime
   name: String!
@@ -84,7 +84,7 @@ input LoginInput {
 
 input CreateUserInput {
   name: String!
-  surname: String!
+  nickname: String!
   email: String!
   password: String!
 }

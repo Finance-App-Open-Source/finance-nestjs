@@ -13,7 +13,7 @@ generator client {
 model User {
   id           Int           @id @default(autoincrement())
   name         String
-  surname      String?
+  nickname      String?
   gender       Gender?
   email        String        @unique
   verifiedAt   DateTime?
@@ -44,8 +44,8 @@ model Transaction {
   accountId       Int
   currency        Currency        @relation(fields: [currencyId], references: [id])
   currencyId      Int
-  dateTime        DateTime
-  createdAt       DateTime        @default(now())
+  dateTime        DateTime?
+  createdAt       DateTime?        @default(now())
   paymentMethod   PaymentMethod   @relation(fields: [paymentMethodId], references: [id])
   paymentMethodId Int
 }

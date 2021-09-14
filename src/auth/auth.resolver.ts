@@ -24,10 +24,10 @@ export class AuthResolver {
   async register(
     @Args('registerInput') registerInput: CreateUserInput,
   ): Promise<RegisterResponse> {
-    const { name, surname, email, password } = registerInput;
+    const { name, nickname, email, password } = registerInput;
     return this.authService.register({
       name,
-      surname,
+      nickname,
       email,
       password,
     });

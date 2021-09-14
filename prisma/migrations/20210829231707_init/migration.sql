@@ -1,2 +1,2 @@
 -- AlterTable
-ALTER TABLE `User` MODIFY `surname` VARCHAR(191);
+ALTER TABLE `User` MODIFY `nickname` VARCHAR(191);

@@ -17,7 +17,7 @@ registerEnumType(Gender, {
 @InputType()
 export class CreateUserInput {
   name: string;
-  surname: string;
+  nickname: string;
   @IsEmail({}, { message: 'Is not a valid email!' })
   email: string;
   password: string;
@@ -28,7 +28,7 @@ export class UserModel implements User {
   id: number;
   name: string;
   @Field({ nullable: true })
-  surname: string;
+  nickname: string;
   @Field(() => Gender, { nullable: true })
   gender: Gender;
   email: string;
