@@ -17,6 +17,7 @@ export class UsersService {
     });
   }
 
+
   async create(createUserInput: CreateUserInput): Promise<UserModel> {
     const { name, password, email, nickname } = createUserInput;
     const userInDb = await this.findOne(email);

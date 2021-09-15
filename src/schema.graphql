@@ -44,12 +44,24 @@ type LoginResponse {
 
 type Mutation {
   createAccount(createAccountInput: CreateAccountInput!): AccountModel
+  createPaymentMethod(paymentMethodInput: PaymentMethodInput!): PaymentMethodModel!
   login(loginInput: LoginInput!): LoginResponse!
   makeTransaction(transactionInput: TransactionInput!): TransactionModel!
   register(registerInput: CreateUserInput!): RegisterResponse!
 }
 
+input PaymentMethodInput {
+  name: String!
+}
+
+type PaymentMethodModel {
+  id: Int!
+  name: String!
+  transactions: [TransactionModel!]
+}
+
 type Query {
+  paymentMethods: [PaymentMethodModel!]!
   transactions: [TransactionModel!]!
   users: [UserModel!]!
 }

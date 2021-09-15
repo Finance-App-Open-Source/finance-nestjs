@@ -1,3 +1,5 @@
+import { UseGuards } from '@nestjs/common';
+import { GqlAuthGuard } from './../auth/guards/gql-auth.guard';
 import { TransactionsService } from './transactions.service';
 import { CurrentUser } from './../auth/current-user.decorator';
 import { UserModel } from 'src/users/models/user.model';
@@ -14,18 +16,17 @@ export class TransactionsResolver {
   async transactions() {
     return this.prisma.transaction.findMany();
   }
+  @UseGuards(GqlAuthGuard)
   @Mutation(() => TransactionModel)
   async makeTransaction(
     @CurrentUser() user: UserModel,
     @Args('transactionInput') transactionInput: TransactionInput,
   ){
-    console.log('--------------------');
-    console.log(user);
-    console.log('--------------------');
-
+    transactionInput['userId'] = Number(user.id);
+    console.log(transactionInput);
+    
     const transaction = await this.transactionsService.create(
-      transactionInput,
-      user.id,
+      transactionInput
     );
     return transaction;
   }

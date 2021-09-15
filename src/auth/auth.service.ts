@@ -38,24 +38,28 @@ export class AuthService {
   }
 
   async register(registerInput: CreateUserInput) {
-    let status = {
+    const status = {
       success: true,
       message: 'User registered',
       accessToken: null,
     };
 
     try {
-      const { email, id } = await this.usersService.create(registerInput);
-      const accessToken = this.jwtService.sign({ email, id });
-      status.accessToken = accessToken;
+      const email_in_use = await this.usersService.findOne(registerInput.email);
+      if (!email_in_use) {
+        const { email, id } = await this.usersService.create(registerInput);
+        const accessToken = this.jwtService.sign({ email, id });
+        status.accessToken = accessToken;
+      } else {
+        status.message = 'email is ready in use..';
+        status.success = false;
+        status.accessToken = null;
+      }
     } catch (err) {
-      status = {
-        success: false,
-        message: err.message,
-        accessToken: null,
-      };
+      status.message = err.message;
+      status.success = false;
+      status.accessToken = null;
     }
-
     return status;
   }
 

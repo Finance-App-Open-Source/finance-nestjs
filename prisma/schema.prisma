@@ -36,10 +36,10 @@ model Transaction {
   id              Int             @id @default(autoincrement())
   amount          Float
   type            TransactionType
-  User            User?           @relation(fields: [userId], references: [id])
-  userId          Int?
-  category        Category        @relation(fields: [categoryId], references: [id])
-  categoryId      Int
+  User            User           @relation(fields: [userId], references: [id])
+  userId          Int
+  category        Category?        @relation(fields: [categoryId], references: [id])
+  categoryId      Int?
   account         Account         @relation(fields: [accountId], references: [id])
   accountId       Int
   currency        Currency        @relation(fields: [currencyId], references: [id])

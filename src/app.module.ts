@@ -1,3 +1,4 @@
+import { GoogleStrategy } from './auth/strategies/google.strategy';
 import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
@@ -5,15 +6,13 @@ import { PrismaService } from './prisma.service';
 import { PrismaModule } from 'nestjs-prisma';
 import { GraphQLModule } from '@nestjs/graphql';
 import { AuthModule } from './auth/auth.module';
-import { UsersResolver } from './users/users.resolver';
-import { AccountsResolver } from './accounts/accounts.resolver';
-import { AccountsService } from './accounts/accounts.service';
 import config from './configs/config';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { GraphqlConfig } from './configs/config.interface';
 import { UsersModule } from './users/users.module';
 import { AccountsModule } from './accounts/accounts.module';
 import { TransactionsModule } from './transactions/transactions.module';
+import { PaymentMethodModule } from './payment-method/payment-method.module';
 
 @Module({
   imports: [
@@ -43,8 +42,9 @@ import { TransactionsModule } from './transactions/transactions.module';
     UsersModule,
     AccountsModule,
     TransactionsModule,
+    PaymentMethodModule,
   ],
   controllers: [AppController],
-  providers: [AppService, AppService],
+  providers: [AppService, GoogleStrategy],
 })
 export class AppModule {}
