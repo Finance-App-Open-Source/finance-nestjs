@@ -2,89 +2,129 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
-type AccountModel {
-  id: ID!
-  name: String!
-  amount: Float!
-}
-
-type TransactionModel {
-  id: ID!
-  type: TransactionType!
-  userId: ID
-  categoryId: ID!
-  accountId: ID!
-  currencyId: ID!
-  paymentMethodId: ID!
-  amount: Float!
-  dateTime: DateTime!
-  createdAt: DateTime!
-}
-
-enum TransactionType {
-  INCOME
-  EXPEND
-  TRANSFER
-}
 
 """
 A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
 """
 scalar DateTime
 
-type UserModel {
+
+type AccountModel {
+  amount: Int!
   id: ID!
-  nickname: String
-  gender: Gender
-  verifiedAt: DateTime
   name: String!
-  email: String!
-  createdAt: DateTime!
-  accounts: [AccountModel!]
+}
+
+type CategoryModel {
+  id: ID!
+  name: String!
   transactions: [TransactionModel!]
 }
 
-enum Gender {
-  MALE
-  FEMALE
-  NA
+type PaymentMethodModel {
+  id: Int!
+  name: String!
+  transactions: [TransactionModel!]
 }
 
-type LoginResponse {
-  user: UserModel!
-  success: Boolean!
-  accessToken: String!
+type TransactionModel {
+  id: ID!
+  userId: ID
+  amount: Int!
+  paymentMethodId: ID!
+  categoryId: ID!
+  accountId: ID!
+  type: TransactionType!
+  dateTime: DateTime!
+  createdAt: DateTime!
 }
 
-type RegisterResponse {
-  accessToken: String
-  success: Boolean!
-  message: String!
-}
-
-type Query {
-  users: [UserModel!]!
-}
-
-type Mutation {
-  createAccount(createAccountInput: CreateAccountInput!): AccountModel
-  login(loginInput: LoginInput!): LoginResponse!
-  register(registerInput: CreateUserInput!): RegisterResponse!
+type UserModel {
+  accounts: [AccountModel!]
+  createdAt: DateTime!
+  email: String!
+  gender: Gender
+  id: ID!
+  name: String!
+  nickname: String
+  transactions: [TransactionModel!]
+  verifiedAt: DateTime
 }
 
 input CreateAccountInput {
+  amount: Int!
   name: String!
-  amount: Float!
 }
+
+input CategoryInput {
+  name: String!
+}
+
+
+input CreateUserInput {
+  email: String!
+  name: String!
+  nickname: String!
+  password: String!
+}
+
 
 input LoginInput {
   email: String!
   password: String!
 }
 
-input CreateUserInput {
+input PaymentMethodInput {
   name: String!
-  nickname: String!
-  email: String!
-  password: String!
+}
+
+
+input TransactionInput {
+  amount: Int!
+  categoryId: ID!
+  paymentMethodId: ID!
+  type: TransactionType!
+}
+
+
+
+type LoginResponse {
+  accessToken: String!
+  success: Boolean!
+  user: UserModel!
+}
+
+type RegisterResponse {
+  accessToken: String
+  message: String!
+  success: Boolean!
+}
+
+enum Gender {
+  FEMALE
+  MALE
+  NA
+}
+
+
+enum TransactionType {
+  EXPEND
+  INCOME
+  TRANSFER
+}
+
+type Mutation {
+  createAccount(createAccountInput: CreateAccountInput!): AccountModel
+  createPaymentMethod(paymentMethodInput: PaymentMethodInput!): PaymentMethodModel!
+  createCategory(categoryInput: CategoryInput): CategoryModel!
+  login(loginInput: LoginInput!): LoginResponse!
+  makeTransaction(transactionInput: TransactionInput!): TransactionModel!
+  register(registerInput: CreateUserInput!): RegisterResponse!
+}
+
+type Query {
+  category: [CategoryModel!]
+  paymentMethods: [PaymentMethodModel!]!
+  transactions: [TransactionModel!]!
+  users: [UserModel!]!
 }

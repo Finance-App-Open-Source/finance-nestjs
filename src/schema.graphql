@@ -8,6 +8,15 @@ type AccountModel {
   name: String!
 }
 
+input CategoryInput {
+  name: String!
+}
+
+type CategoryModel {
+  id: Int!
+  name: String!
+}
+
 input CreateAccountInput {
   amount: Int!
   name: String!
@@ -44,6 +53,7 @@ type LoginResponse {
 
 type Mutation {
   createAccount(createAccountInput: CreateAccountInput!): AccountModel
+  createCategory(CategoryInput: CategoryInput!): CategoryModel!
   createPaymentMethod(paymentMethodInput: PaymentMethodInput!): PaymentMethodModel!
   login(loginInput: LoginInput!): LoginResponse!
   makeTransaction(transactionInput: TransactionInput!): TransactionModel!
@@ -57,10 +67,10 @@ input PaymentMethodInput {
 type PaymentMethodModel {
   id: Int!
   name: String!
-  transactions: [TransactionModel!]
 }
 
 type Query {
+  categories: [CategoryModel!]!
   paymentMethods: [PaymentMethodModel!]!
   transactions: [TransactionModel!]!
   users: [UserModel!]!
@@ -74,23 +84,17 @@ type RegisterResponse {
 
 input TransactionInput {
   accountId: ID!
-  amount: Int!
-  categoryId: ID!
-  currencyId: ID!
-  paymentMethodId: ID!
+  amount: Float = 0
+  categoryId: ID
   type: TransactionType!
-  userId: ID
+  userId: ID!
 }
 
 type TransactionModel {
   accountId: ID!
   amount: Int!
-  categoryId: ID!
-  createdAt: DateTime!
-  currencyId: ID!
-  dateTime: DateTime!
+  categoryId: ID
   id: ID!
-  paymentMethodId: ID!
   type: TransactionType!
   userId: ID
 }

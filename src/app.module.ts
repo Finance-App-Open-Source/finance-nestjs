@@ -13,6 +13,7 @@ import { UsersModule } from './users/users.module';
 import { AccountsModule } from './accounts/accounts.module';
 import { TransactionsModule } from './transactions/transactions.module';
 import { PaymentMethodModule } from './payment-method/payment-method.module';
+import { CategoryModule } from '././category/category.module';
 
 @Module({
   imports: [
@@ -43,6 +44,7 @@ import { PaymentMethodModule } from './payment-method/payment-method.module';
     AccountsModule,
     TransactionsModule,
     PaymentMethodModule,
+    CategoryModule,
   ],
   controllers: [AppController],
   providers: [AppService, GoogleStrategy],

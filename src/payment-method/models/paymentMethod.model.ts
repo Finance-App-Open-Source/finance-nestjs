@@ -1,4 +1,3 @@
-import { TransactionModel } from 'src/transactions/models/transactions.model';
 import { InputType, ObjectType } from "@nestjs/graphql";
 import { PaymentMethod } from "@prisma/client";
 
@@ -7,7 +6,6 @@ import { PaymentMethod } from "@prisma/client";
 export class PaymentMethodModel implements PaymentMethod{
   id: number;
   name:string;
-  transactions?: TransactionModel[];
 }
 
 

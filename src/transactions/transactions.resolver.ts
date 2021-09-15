@@ -22,10 +22,9 @@ export class TransactionsResolver {
     @CurrentUser() user: UserModel,
     @Args('transactionInput') transactionInput: TransactionInput,
   ){
-    transactionInput['userId'] = Number(user.id);
-    console.log(transactionInput);
-    
+    const userID = user;
     const transaction = await this.transactionsService.create(
+      userID,
       transactionInput
     );
     return transaction;

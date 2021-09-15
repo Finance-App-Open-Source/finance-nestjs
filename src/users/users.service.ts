@@ -37,7 +37,18 @@ export class UsersService {
         },
       });
 
-      return user;
+      const account = await this.prisma.account.create({
+        data:{
+          amount:0,
+          userId:user.id,
+          name:'Cartera de ' + user.name
+        }
+      })
+      console.log(account);
+      
+      if(account){
+        return user;
+      }
     } catch (error) {
       throw new HttpException(error.message, HttpStatus.BAD_REQUEST);
     }
