@@ -31,7 +31,6 @@ import { AccountsModule } from './accounts/accounts.module';
           debug: graphqlConfig.debug,
           playground: graphqlConfig.playgroundEnabled,
           context: ({ req }) => ({ req }),
-          introspection: true,
         };
       },
       inject: [ConfigService],
